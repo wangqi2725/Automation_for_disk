@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.15.0/umd/popper.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">平台(试验版本)</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="register">环境信息表<span class="sr-only">(current)</span></a></li>
+        <li><a href="#">人员表</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Library</a></li>
+  <li class="active">Data</li>
+</ol>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">环境信息表格展示（演示）</div>
+
+    <table class="table table-striped table-hover table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>环境名</th>
+                <th>IP</th>
+                <th>归属者</th>
+                <th>状态</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for env in Envs %}
+                <tr>
+                <td>{{ env.id }}</td>
+                <td>{{ env.username }}</td>
+                <td>{{ env.addr }}</td>
+                <td>{{ env.own }}</td>
+                <td>{{ env.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">自动化测试信息表格展示（演示）</div>
+
+    <table class="table table-striped table-hover table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>任务名</th>
+                    <th>占用环境</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for case in TestCases %}
+                    <tr>
+                    <td>{{ case.id }}</td>
+                    <td>{{ case.name }}</td>
+                    <td>{{ case.env }}</td>
+                    <td>{{ case.StartTime }}</td>
+                    <td>{{ case.EndTime }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">用户信息表格展示（演示）</div>
+
+    <table class="table table-striped table-hover table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>占有环境</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in Users %}
+                    <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.OwnEnv }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+
+</body>
+</html>

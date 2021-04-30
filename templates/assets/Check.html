@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}检查与释放{% endblock %}
+{% block css %}{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+    <h1>
+        检索执行情况
+        <small>Check AND Release</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-address-card"></i>主页</a></li>
+        <li>检索</li>
+        <li class="active">展示页</li>
+    </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+<div id="check">
+    <h1>测试版本</h1>
+    <form method="post">
+        {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+        <p>目标机IP： <input type="text" required="required" placeholder="IP" name="ip"></p>
+        <p>目标机账户： <input type="text" required="required" placeholder="账户信息" name="username"></p>
+        <p>目标机密码： <input type="text" required="required" placeholder="密码" name="password"></p>
+        <p>s_id： <input type="text" required="required" placeholder="s_id" name="s_id"></p>
+        <p>c_id： <input type="text" required="required" placeholder="c_id" name="c_id"></p>
+        <textarea rows="20" cols="100" name="cmd" placeholder="命令回显">{{ CMDRES }}</textarea>
+        <input class="button" type="submit" onclick="display_alert()" value="执行" />
+    </form>
+</div>
+
+{% endblock %}

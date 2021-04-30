@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}意见与建议{% endblock %}
+{% block css %}{% endblock %}
+
+{% block breadcrumb %}
+    <section class="content-header">
+    <h1>
+        意见与建议
+        <small>long time running</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-address-card"></i>主页</a></li>
+        <li>意见与建议</li>
+        <li class="active">对话</li>
+    </ol>
+    </section>
+{% endblock %}
+
+
+{% block content %}
+
+    <div>
+        {% if body %}
+            <div>
+                <img src="{% static 'adminlet-2.4.10/dist/img/LMAL.png' %}">
+                <img src="{% static 'adminlet-2.4.10/dist/img/LingMuAiLi.jpg' %}">
+                <img src="{% static 'adminlet-2.4.10/dist/img/snow.jpg' %}">
+            </div>
+        {% endif %}
+        {% if message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+
+        <h3>最好不要点击,会引起身体不适</h3>
+        <form action="" method="post">
+            <input type="text" required="required" placeholder="彩蛋密码" name="password">
+            <button class="button">警告</button>
+        </form>
+    </div>
+{% endblock %}

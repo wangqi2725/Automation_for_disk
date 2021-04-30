@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}定时任务{% endblock %}
+{% block css %}
+    <style>
+        .table{
+            width: 100%;
+            border-collapse:collapse;
+            {#border: 1px solid transparent;#}
+            border: 1px solid #ccc;
+            border-right: 2px solid #cbdef2;
+            font-weight: bold;
+        }
+        .thead {
+           background:#4985c6 ;
+           color: #fff;
+        }
+        .thead tr {
+            height: 50px;
+            line-height: 50px;
+        }
+        table td {
+            border: 1px solid #7cd9ff;
+        }
+        .line-limit-length{
+            max-width: 550px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;//文本不换行,超出一行部分截取显示...
+        }
+    </style>
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <section class="content-header">
+    <h1>
+        定时任务展示页
+        <small>Upgrade</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-address-card"></i>主页</a></li>
+        <li>定时器</li>
+        <li class="active">展示页</li>
+    </ol>
+    </section>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h4 class="box-title">定时任务配置</h4>
+                </div>
+                <div class="panel panel-heading">
+                    <form method="post">
+                        {% if message %}
+                            <div class="alert alert-danger">{{ message }}</div>
+                        {% endif %}
+                        <p>命令:
+                            <input type="text" required='required' placeholder="命令" name="apscmd">
+                            <input type="text" required='required' placeholder="执行机" name="aspmachine">
+                        </p>
+                        <p>执行方式：
+                            <input type="radio" name="execute" value="interval">间隔
+                            <input type="radio" name="execute" value="date">特定时间
+                            <input type="radio" name="execute" value="cron">周期
+                        </p>
+                        <p>间隔:
+                            <input type="text" placeholder="s/m/h/d" name="number">
+                            <select name="selecttime">
+                                <option value="s">s</option>
+                                <option value="m">m</option>
+                                <option value="h">h</option>
+                                <option value="d">d</option>
+                                <option value="w">w</option>
+                            </select>
+                            <input type="text" placeholder="starttime" name="stime">
+                            <input type="text" placeholder="endtime" name="etime">
+                        </p>
+                        <p>指定时间：
+                            <input type="text" placeholder="year" name="year">
+                            <input type="text" placeholder="month" name="month">
+                            <input type="text" placeholder="day" name="day"></p>
+                        <p>周期：
+                            <select name="cycle">
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                        </p>
+                        <button class="button" type="submit">添加</button>
+                    </form>
+                </div>
+                <div class="box-body">
+                    <table id="table" border="1" class="table table-bordered table-striped">
+                        <thead class="thead">
+                            <tr>
+                                <th>序号</th>
+                                <th>id</th>
+                                <th>下次运行时间</th>
+                                <th>具体信息</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for job in jobs %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ job.id }}</td>
+                            <td>{{ job.next_run_time }}</td>
+                            <td class="line-limit-length">{{ job.job_state }}</td>
+                            <td>
+                                <button name="restart" onclick="">开始</button>
+                                <button name="pause" onclick="">暂停</button>
+                                <button name="edit" onclick="">编辑</button>
+                                <button name="delete" onclick="">删除</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+{#                    <table>#}
+{#                        <thead>#}
+{#                            <tr>#}
+{#                                <th>序号</th>#}
+{#                                <th>ID</th>#}
+{#                                <th>状态</th>#}
+{#                                <th>运行时间</th>#}
+{#                                <th>执行时间</th>#}
+{#                                <th>完成</th>#}
+{#                                <th>异常</th>#}
+{#                                <th>报错</th>#}
+{#                                <th>job_id</th>#}
+{#                            </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                            {% for jobexe in jobexes %}#}
+{#                            <tr>#}
+{#                                <td>{{ forloop.counter }}</td>#}
+{#                                <td>{{ jobexe.id }}</td>#}
+{#                                <td>{{ jobexe.status }}</td>#}
+{#                                <td>{{ jobexe.run_time }}</td>#}
+{#                                <td>{{ jobexe.duration }}</td>#}
+{#                                <td>{{ jobexe.finished }}</td>#}
+{#                                <td>{{ jobexe.exception }}</td>#}
+{#                                <td>{{ jobexe.traceback }}</td>#}
+{#                                <td>{{ jobexe.job_id }}</td>#}
+{#                            </tr>#}
+{#                            {% endfor %}#}
+{#                        </tbody>#}
+{#                    </table>#}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+{% block script %}
+<script src="{% static 'adminlet-2.4.10/bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+
+<script>
+$(function () {
+        $('#table').DataTable({
+          "paging": true,       <!-- 允许分页 -->
+          "lengthChange": true, <!-- 允许改变每页显示的行数 -->
+          "searching": true,    <!-- 允许内容搜索 -->
+          "ordering": true,     <!-- 允许排序 -->
+          "info": true,         <!-- 显示信息 -->
+          "autoWidth": false    <!-- 固定宽度 -->
+        });
+      });
+</script>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}自选用例{% endblock %}
+{% block css %}
+
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <section class="content-header">
+    <h1>
+        自选用例
+        <small>Select Case</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-address-card"></i>主页</a></li>
+        <li>自选用例</li>
+        <li class="active">展示页</li>
+    </ol>
+    </section>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">用例信息展示</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">执行机信息展示</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="box box-solid">
+                <div class="box-header">
+                    <i class="fa fa-address-card"></i>
+
+                    <h3 class="box-title">测试<small>test</small></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <form method="post">
+                    <fieldset>
+                    <legend>case information:</legend>
+                    CaseID: <input type="text" size="30"><br>
+                    ExcMachine: <input type="text" size="30"><br>
+                    Date Of Running: <input type="text" size="10">
+                    </fieldset>
+                    </form>
+
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+
+{% endblock %}

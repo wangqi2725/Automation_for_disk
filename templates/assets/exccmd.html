@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}持续集成{% endblock %}
+{% block css %}
+{#    <link rel="stylesheet" href="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">#}
+    <style>
+        .table{
+            width: 100%;
+            border-collapse:collapse;
+            {#border: 1px solid transparent;#}
+            border: 1px solid #ccc;
+            border-right: 2px solid #cbdef2;
+            font-weight: bold;
+        }
+        .thead {
+           background:#4985c6 ;
+           color: #fff;
+        }
+        .thead tr {
+            height: 50px;
+            line-height: 50px;
+        }
+        table td {
+            border: 1px solid #7cd9ff;
+        }
+    </style>
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <section class="content-header">
+    <h1>
+        持久化运行
+        <small>long time running</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-address-card"></i>主页</a></li>
+        <li>持久化展示页</li>
+        <li class="active">展示页</li>
+    </ol>
+    </section>
+{% endblock %}
+
+{% block content %}
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+
+        <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">执行机信息表格展示<small>(演示)</small></h3>
+            </div>
+            <form method="post">
+
+                {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+
+                <div class="panel panel-heading">
+                    <textarea rows="1" cols="150" name="cmd" placeholder="执行命令"></textarea>
+{#                    <button class="button" type="submit">执行</button>#}
+                </div>
+                <div class="box-body">
+                    <table id="table" border="1" class="table table-bordered table-striped">
+                        <thead class="thead">
+                            <tr>
+                                <th>序号</th>
+                                <th>环境名</th>
+                                <th>IP</th>
+                                <th>账户</th>
+                                <th>密码</th>
+                                <th>状态</th>
+                                <th>类型</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for machine in machines %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ machine.name }}</td>
+                                <td>{{ machine.ip }}</td>
+                                <td>{{ machine.username }}</td>
+                                <td>{{ machine.password }}</td>
+                                <td>{{ machine.type }}</td>
+                                {% if machine.status == "正常" %}
+                                    <td><label class="label label-success">{{ machine.status }}</label></td>
+                                {% elif machine.status == "占用" %}
+                                    <td><label class="label label-default">{{ machine.status }}</label></td>
+                                {% else %}
+                                    <td><label class="label label-warning">{{ machine.status }}</label></td>
+                                {% endif %}
+                                <td>
+{#                                    <input type="radio" name="vehicle" value="{{ machine.id }}">执行<br>#}
+{#                                    <input type="radio" name="vehicle" value="{{ machine.id }}">查询<br>#}
+                                    <button name="vehicle" value="{{ machine.id }}" type="submit">执行</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'adminlet-2.4.10/bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'adminlet-2.4.10/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+
+<script>
+$(function () {
+        $('#table').DataTable({
+          "paging": true,       <!-- 允许分页 -->
+          "lengthChange": true, <!-- 允许改变每页显示的行数 -->
+          "searching": true,    <!-- 允许内容搜索 -->
+          "ordering": true,     <!-- 允许排序 -->
+          "info": true,         <!-- 显示信息 -->
+          "autoWidth": false    <!-- 固定宽度 -->
+        });
+      });
+</script>
+
+{% endblock %}
